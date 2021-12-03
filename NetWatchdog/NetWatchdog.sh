@@ -22,7 +22,7 @@ function logStep {
 function checkWLAN {
 	logStep "Checking WLAN connection..." ""
 	{	
-		CURR_NETWORK=$(iwconfig | grep '^wlan0' | cut -d\: -f2)
+		CURR_NETWORK=$(sudo iwconfig | grep '^wlan0' | cut -d\: -f2)
 	} &> /dev/null
 	logStep "Current network SSID: " ${CURR_NETWORK}
 }
@@ -31,11 +31,11 @@ function checkWLAN {
 function resetWLAN {
 	{
 		logStep "Resetting WLAN adapter..." ""
-		nmcli radio wifi off
+		sudo nmcli radio wifi off
 		logStep "WLAN adapter switched OFF" ""
 		# Waiting for the reset
 		sleep $WLAN_RESET_WAIT;
-		nmcli radio wifi on
+		sudo nmcli radio wifi on
 		logStep "WLAN adapter switched ON" ""
 		logStep "WLAN reset successful" ""
 		#$(date +"%Y-%m-%d %T")
