@@ -39,7 +39,7 @@ function resetWLAN {
 		# Shutting the WLAN adapter down
 		sudo nmcli radio wifi off
 		logStep "WLAN adapter switched OFF"
-		# Waiting for the adapter to reset
+		# Waiting for the adapter toreset
 		sleep $WLAN_RESET_WAIT;
 		# Setting the adapter to ON state
 		sudo nmcli radio wifi on
@@ -72,22 +72,24 @@ else
 		sleep 10;
 		checkWLAN
 		if [ ${CURR_NETWORK} != ${OFF_STATE} ]; then
+			#sleep 10;
 			break
 		fi
 	done
 	
 	# Ping a specified online host
-	
 	logStep "Pinging " ${PING_HOST} "..."
-	PING_RESULT=$(ping -c 1 google.com)
-	
-	# Check if the connection is established with the specified host
-	if [ $PING_RESULT -ne 0 ]; then
-		logStep "Unable to connect" ${PING_HOST} 
-	else
-		logStep "Connected successfully to" ${PING_HOST} 
-	fi
-	
+	for ((i=0;i<$RETRY_MAX;i++)); do
+		ping -c 1 -q $PING_HOST &>/dev/null
+		PING_RESULT=$?
+		# Check if the connection is established with the specified host
+		if [ $PING_RESULT -ne 0 ]; then
+			logStep "Unable to connect" ${PING_HOST} 
+		else
+			logStep "Connected successfully to" ${PING_HOST}
+			break
+		fi
+	done
 	# Unable to connect after *n* replies
 	#echo "[" $(date +"%Y-%m-%d %T") "]" "Unable to connect after "  $RETRY_MAX " retries" >> $LOGFILE
 
