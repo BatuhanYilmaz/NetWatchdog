@@ -4,8 +4,10 @@
 
 # Host to ping
 PING_HOST="google.com"
-# Name of log file
-LOGFILE=/home/ubuntu/NetWatchdog/netLogs.txt
+#Name of log file
+LOGFILE_NAME=netLogs.txt
+# Directory of log file
+LOGFILE=~/$LOGFILE_NAME
 # Maximum number of retries
 RETRY_MAX=5
 # WLAN wait duration (in seconds) for reset
