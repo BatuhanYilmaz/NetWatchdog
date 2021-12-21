@@ -91,6 +91,12 @@ function checkWLAN {
 	einfo "Current network SSID: " ${CURR_NETWORK}
 }
 
+# Getting the obtained signal power
+function getWLANSS {
+
+	einfo $(sudo iwconfig  wlan0 | grep Link)
+}
+
 # Ping a specified online host
 function pingConnection {
 
@@ -181,6 +187,7 @@ pingConnection $RETRY_MAX
 # Check whether the device is connected with a network or not 
 if [[ ${CURR_NETWORK} != ${OFF_STATE} && $PING_OK -eq 1 ]]; then
 	einfo "Current network SSID: " ${CURR_NETWORK}
+	getWLANSS
 else
 	eerror "NO NETWORK CONNECTION!"
 	# Retrying if reset fails
@@ -192,6 +199,7 @@ else
 		if [ ${CURR_NETWORK} != ${OFF_STATE} ]; then
 			#sleep 10;
 			eok "Current network SSID: " ${CURR_NETWORK}
+			getWLANSS
 			pingConnection $RETRY_MAX
 			if [ $PING_OK -eq 1 ]; then
 				eok "Connected successfully to" ${PING_HOST}
