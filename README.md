@@ -13,12 +13,13 @@ Open a terminal, go to `~/NetWatchdog` directory and type
 #### 3) Add the task into crontab
 Type `crontab -e` into terminal.
 
-Add this block into the opened file:
+Add these blocks into the opened file:
 
   `*\1 * * * * ~/NetWatchdog/NetWatchdog.sh   
   0 0 * * 1 sudo rm netLogs_verbose.txt
 
 It will make the shell script work in every 1 minute.
+Additionally, the script deletes the verbose logs every Monday, at 00:00.
 
 Time interval can be changed through the "*" regions.
 
