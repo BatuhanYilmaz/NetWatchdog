@@ -15,9 +15,10 @@ Type `crontab -e` into terminal.
 
 Add this block into the opened file:
 
-  `*\1 * * * * ~/NetWatchdog/NetWatchdog.sh`
+  `*\1 * * * * ~/NetWatchdog/NetWatchdog.sh   
+  0 0 * * 1 sudo rm netLogs_verbose.txt
 
-It will make the shell sript work in every 1 minute.
+It will make the shell script work in every 1 minute.
 
 Time interval can be changed through the "*" regions.
 
