@@ -6,8 +6,10 @@
 PING_HOST="google.com"
 #Name of log file
 LOGFILE_NAME=netLogs.txt
+LOGFILE_VERB_NAME=netLogs_verbose.txt
 # Directory of log file
 LOGFILE=~/$LOGFILE_NAME
+LOGFILE_VERB=~/$LOGFILE_VERB_NAME
 # Maximum number of retries
 RETRY_MAX=5
 # WLAN wait duration (in seconds) for reset
@@ -43,15 +45,30 @@ VERBOSITY=4
 
 # ------ DEFINITION OF FUNCTIONS START ------
 
+
 # esilent prints output even in silent mode
-function esilent () { VERB_LVL=$SILENT_LVL elog "$@" >> $LOGFILE;}
-function enotify () { VERB_LVL=$NTF_LVL elog "$@" >> $LOGFILE;} 
-function eok ()    { VERB_LVL=$NTF_LVL elog "SUCCESS - $@" >> $LOGFILE;}
-function ewarn ()  { VERB_LVL=$WRN_LVL elog "WARNING - $@" >> $LOGFILE;}
-function einfo ()  { VERB_LVL=$INF_LVL elog "INFO ---- $@" >> $LOGFILE;}
-function edebug () { VERB_LVL=$DBG_LVL elog "DEBUG --- $@" >> $LOGFILE;}
-function eerror () { VERB_LVL=$ERR_LVL elog "ERROR --- $@" >> $LOGFILE;} 
-function ecrit ()  { VERB_LVL=$CRT_LVL elog "FATAL --- $@" >> $LOGFILE;} 
+function esilent () { VERB_LVL=$SILENT_LVL 
+			elog "$@" >> $LOGFILE_VERB
+			elog "$@" >> $LOGFILE;}
+function enotify () { VERB_LVL=$NTF_LVL 
+			elog "$@" >> $LOGFILE_VERB
+			elog "$@" >> $LOGFILE;} 
+function eok ()    { VERB_LVL=$NTF_LVL 
+			elog "SUCCESS - $@" >> $LOGFILE_VERB
+			elog "SUCCESS - $@" >> $LOGFILE;}
+function ewarn ()  { VERB_LVL=$WRN_LVL 
+			elog "WARNING - $@" >> $LOGFILE_VERB;}
+function einfo ()  { VERB_LVL=$INF_LVL 
+			elog "INFO ---- $@" >> $LOGFILE_VERB;}
+function edebug () { VERB_LVL=$DBG_LVL 
+			elog "DEBUG --- $@" >> $LOGFILE_VERB;}
+function eerror () { VERB_LVL=$ERR_LVL
+			elog "ERROR --- $@" >> $LOGFILE_VERB
+			elog "ERROR --- $@" >> $LOGFILE;} 
+function ecrit ()  { VERB_LVL=$CRT_LVL
+			elog "FATAL --- $@" >> $LOGFILE_VERB
+			elog "FATAL --- $@" >> $LOGFILE;} 
+			
 function edumpvar () { for var in $@ ; do edebug "$var=${!var}" ; done }
 function elog() {
         if [ $VERBOSITY -ge $VERB_LVL ]; then
