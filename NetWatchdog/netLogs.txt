@@ -1,3 +1,0 @@
-[ 2021-12-20 14:52:33 ] ------ WLAN Connection Check Routine START ------
-[ 2021-12-20 14:52:33 ] Checking WLAN connection...
-[ 2021-12-20 14:52:33 ] Current network SSID: "SMARTIR"
